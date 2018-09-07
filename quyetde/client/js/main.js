@@ -20,14 +20,21 @@ $(document).ready(function () {
             url: 'http://localhost:6969/answer',
             method: 'PUT',
             data: {
-                'answer': answer,
-                'id': questionId
+                answer,
+                questionId
             },
             success: function (data) {
-                console.log('success')
+               if(data.question){
+                   let totalVote = data.question.yes + data.question.no;
+                   $('#vote').text(totalVote);
+                   $('#voteYes').text((data.question.yes/totalVote)*100);
+                   $('#voteNo').text((data.question.no/totalVote)*100);
+                   $('.questionInfo').css('display','block');
+                   $('.answer').css('display','none');
+               }
             },
             error: function () {
-                console.log("error!");
+                console.log(error);
             }
         });
     });
